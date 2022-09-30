@@ -28,12 +28,13 @@ WORKDIR /usr/src/app
 RUN npm install -g pnpm
 
 COPY package*.json ./
+COPY pnpm-lock.yaml ./
 
 RUN pnpm install
 
 COPY . .
 
-EXPOSE 5000
+EXPOSE $PORT
 
 RUN pnpm run build
 CMD pnpm run start:prod
@@ -44,11 +45,13 @@ CMD pnpm run start:prod
 
 This builds a docker image using the Dockerfile in the current folder.
 ```bash
-  docker build ./
+  docker build ./ --build-arg PORT=<PORT_NUMBER_TO_BE_EXPOSED_FROM_YOUR_APP> <ARG>=<ARG>
+  
+  docker build ./ --build-arg PORT=5000
 ```  
 This runs the docker image an example is shown below of how it would look like with the correct values.
 ```bash
-  docker run -p <internal_docker_port>:<machine_port> <docker_image_id>
+  docker run --env-file=<environment-variable-file-name>.env -p <internal_docker_port>:<machine_port> <docker_image_id> 
 
-  docker run -p 5000:5000 e31f4c2694445e8b3d38a09ca8847a7ecb2c956fc10fbaf3932ec9a71df9177d
+  docker run --env-file=.env -p 5000:5000 e31f4c2694445e8b3d38a09ca8847a7ecb2c956fc10fbaf3932ec9a71df9177d
 ```

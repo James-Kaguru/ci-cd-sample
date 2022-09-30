@@ -11,7 +11,7 @@ RUN pnpm install
 
 COPY . .
 
-EXPOSE 5000
+EXPOSE $PORT
 
 RUN pnpm run build
 CMD pnpm run start:prod
