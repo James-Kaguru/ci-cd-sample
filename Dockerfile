@@ -4,7 +4,8 @@ WORKDIR /usr/src/app
 
 RUN npm install -g pnpm
 
-COPY package*.json ./
+COPY package.json ./
+COPY pnpm-lock.yaml ./
 
 RUN pnpm install
 
@@ -14,3 +15,4 @@ EXPOSE 5000
 
 RUN pnpm run build
 CMD pnpm run start:prod
+
