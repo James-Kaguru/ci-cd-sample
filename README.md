@@ -1,73 +1,54 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# CI/CD Sample
+This is meant to kickstart anyone who wants to setup a ci/cd pipline. It is a simple project containing the basic nestjs source code.
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
-
-```bash
-$ npm install
+## Steps
+1. Create your application.
+2. Ensure you have a build script in your package.json as shown below
+```json
+{
+  "name": "ci-cd-sample",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "nest build",
+    "start:prod": "node dist/main"
+  }
+}
 ```
+>> In the example above the build script is "nest build" run with by the command "build".
+4. Ensure that the package.json also has a run script that is able to run your built code.
+>> In the example above it is represented by the "node dist/main" which is run by the "start:prod" command.
+You can manually test the steps above to see if they are working correctly then proceed with the rest. It is important
+to **test at every step** so that you are certain that the program runs before moving to later steps. 
+5. Create a Dockerfile that incorporates your build and run step as shown below. Also ensure that you have a .dockerignore file
+```Dockerfile
+FROM node:16.14
 
-## Running the app
+WORKDIR /usr/src/app
 
-```bash
-# development
-$ npm run start
+RUN npm install -g pnpm
 
-# watch mode
-$ npm run start:dev
+COPY package*.json ./
 
-# production mode
-$ npm run start:prod
+RUN pnpm install
+
+COPY . .
+
+EXPOSE 5000
+
+RUN pnpm run build
+CMD pnpm run start:prod
 ```
+>> Our build step is run then our run step is run as shown in the last two lines
 
-## Test
+>>You should test whether docker file is able to build correctly. Example is as shown below
 
+This builds a docker image using the Dockerfile in the current folder.
 ```bash
-# unit tests
-$ npm run test
+  docker build ./
+```  
+This runs the docker image an example is shown below of how it would look like with the correct values.
+```bash
+  docker run -p <internal_docker_port>:<machine_port> <docker_image_id>
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+  docker run -p 5000:5000 e31f4c2694445e8b3d38a09ca8847a7ecb2c956fc10fbaf3932ec9a71df9177d
 ```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
