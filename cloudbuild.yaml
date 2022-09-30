@@ -1,3 +1,5 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'us-central1-docker.pkg.dev/${PROJECT_ID}/practise/ci-cd:1.0', '.']
+    args: [ 'build', '-t', 'europe-west1-docker.pkg.dev/gcp-practise-346310/practise/ci-cd:2.0', '.' ]
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'europe-west1-docker.pkg.dev/gcp-practise-346310/practise/ci-cd:2.0']
