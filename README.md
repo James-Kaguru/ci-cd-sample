@@ -45,9 +45,8 @@ CMD pnpm run start:prod
 
 This builds a docker image using the Dockerfile in the current folder.
 ```bash
-  docker build ./ --build-arg PORT=<PORT_NUMBER_TO_BE_EXPOSED_FROM_YOUR_APP> <ARG>=<ARG>
+  docker build ./
   
-  docker build ./ --build-arg PORT=5000
 ```  
 This runs the docker image an example is shown below of how it would look like with the correct values.
 ```bash
@@ -55,3 +54,4 @@ This runs the docker image an example is shown below of how it would look like w
 
   docker run --env-file=.env -p 5000:5000 e31f4c2694445e8b3d38a09ca8847a7ecb2c956fc10fbaf3932ec9a71df9177d
 ```
+6. If everything works upto that point then you can proceed to build 
