@@ -5,6 +5,6 @@ import { ConfigService } from '@nestjs/config';
 export class AppService {
   constructor(private configService: ConfigService) {}
   getHello(): string {
-    return `Hello World! App is running on port ${this.configService.get<string>('PORT')}.`;
+    return `Welcome to Las Noches. I am ${this.configService.get<string>('ESPADA')}, espada number ${this.configService.get<string>('RANK')}. Your app is running on port ${this.configService.get<string>('PORT')}.`;
   }
 }
