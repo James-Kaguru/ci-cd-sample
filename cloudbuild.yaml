@@ -1,5 +1,22 @@
 steps:
+  # Build the docker image
   - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'build', '-t', 'europe-west1-docker.pkg.dev/gcp-practise-364610/prac/ci-cd:2.2', '.' ]
+    args: [ 'build', '-t', 'europe-west1-docker.pkg.dev/gcp-practise-364610/prac/ci-cd:$COMMIT_SHA', '.' ]
+
+  # Push the image to artifact registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'europe-west1-docker.pkg.dev/gcp-practise-364610/prac/ci-cd:2.2']
+    args: ['push', 'europe-west1-docker.pkg.dev/gcp-practise-364610/prac/ci-cd:$COMMIT_SHA']
+
+  # Deploy container image to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'prac'
+      - '--image'
+      - 'europe-west1-docker.pkg.dev/gcp-practise-364610/prac/ci-cd:$COMMIT_SHA'
+      - '--region'
+      - 'europe-west1'
+  images:
+    - 'europe-west1-docker.pkg.dev/gcp-practise-364610/prac/ci-cd:$COMMIT_SHA'
