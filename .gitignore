@@ -42,4 +42,4 @@ lerna-debug.log*
 
 # terraform files
 /.terraform/*
-
+*terraform*
