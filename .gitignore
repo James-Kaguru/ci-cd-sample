@@ -37,5 +37,8 @@ lerna-debug.log*
 # Environment variable
 .env*
 
-#
+# terraform files
 terraform-service-account-credentials.json
+/.terraform.lock.hcl
+/terraform.tfstate
+/terraform.tfstate.backup
