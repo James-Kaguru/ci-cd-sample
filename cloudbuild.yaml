@@ -17,6 +17,4 @@ steps:
       - '--image'
       - 'europe-west1-docker.pkg.dev/$PROJECT_ID/prac/ci-cd:$COMMIT_SHA'
       - '--region'
-      - '-europe-west1'
-  images:
-    - 'europe-west1-docker.pkg.dev/$PROJECT_ID/prac/ci-cd:$COMMIT_SHA'
+      - 'europe-west1'
