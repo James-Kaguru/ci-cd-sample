@@ -102,7 +102,17 @@ services:
 ```bash
     docker-compose up -d 
 ```
-3. To shut down the docker containers
+3. To check the status of the container run
+```bash
+    docker-compose ps 
+```
+to get the docker containers that are running
+4. The run 
+```bash
+    docker-compose logs <container id>
+```
+to get the logs for the container
+5. To shut down the docker containers
 ```bash
     docker-compose down 
 ```
