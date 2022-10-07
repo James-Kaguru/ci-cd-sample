@@ -20,6 +20,7 @@ steps:
       - 'europe-west1'
       - '--port'
       - '5000'
+options:
     env:
       - 'ESPADA=Barragan Louisenbairn'
       - 'RANK=2'
