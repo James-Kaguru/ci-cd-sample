@@ -20,6 +20,15 @@ steps:
       - 'europe-west1'
       - '--port'
       - '5000'
+      - '--set-env-vars'
+      - 'ESPADA=Barragan Louisenbairn'
+      - '--set-env-vars'
+      - 'RANK=2'
+      - '--set-env-vars'
+      - 'PORT=5000'
+      - '--set-env-vars'
+      - 'MONGODB_URI=mongodb+srv://interclub-api:iqZi02BQY7uUeoIl@cluster0.nygob.mongodb.net/interclub'
+
 options:
     env:
       - 'ESPADA=Barragan Louisenbairn'
