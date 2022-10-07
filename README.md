@@ -84,7 +84,7 @@ services:
       PORT: 5000
       MONGODB_URI: mongodb://root:example@dev-db:27017/
       RANK: 2
-      ESPADA: "Barragan Louisenbairn "
+      ESPADA: "Barragan Louisenbairn"
     depends_on:
       - dev-db
     ports:
