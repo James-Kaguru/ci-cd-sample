@@ -23,4 +23,5 @@ steps:
     env:
       - 'ESPADA=Barragan Louisenbairn'
       - 'RANK=2'
+      - 'PORT=5000'
       - 'MONGODB_URI=mongodb+srv://interclub-api:iqZi02BQY7uUeoIl@cluster0.nygob.mongodb.net/interclub'
