@@ -70,3 +70,39 @@ steps:
     args: ['build', '-t', 'us-central1-docker.pkg.dev/${PROJECT_ID}/practise/ci-cd:1.0', '.']
 ```
 >> to run it locally just follow instructions on step 7
+
+
+## Using the deployed image locally connected to a mongodb container
+1. Create a docker-compose.yml as shown below
+```yml
+version: '3.1'
+
+services:
+  api:
+    image: europe-west1-docker.pkg.dev/gcp-practise-364610/prac/ci-cd:2.2
+    environment:
+      PORT: 5000
+      MONGODB_URI: mongodb://root:example@dev-db:27017/
+      RANK: 2
+      ESPADA: "Barragan Louisenbairn"
+    depends_on:
+      - dev-db
+    ports:
+      - 5000:5000
+
+  dev-db:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+```
+2. To run the docker compose file run
+```bash
+    docker-compose up -d 
+```
+3. To shut down the docker containers
+```bash
+    docker-compose down 
+```
