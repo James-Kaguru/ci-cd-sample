@@ -21,4 +21,4 @@ steps:
       - '--port'
       - '5000'
       - '--set-env-vars'
-      - ['ESPADA=Barragan Louisenbairn','RANK=2','MONGODB_URI=mongodb://localhost:27017/nest']
+      - ['ESPADA=Barragan Louisenbairn','RANK=2','MONGODB_URI=mongodb+srv://interclub-api:iqZi02BQY7uUeoIl@cluster0.nygob.mongodb.net/interclub']
