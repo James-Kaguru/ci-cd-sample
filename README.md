@@ -50,18 +50,18 @@ This builds a docker image using the Dockerfile in the current folder.
 ```  
 This runs the docker image an example is shown below of how it would look like with the correct values.
 ```bash
-  docker run --env-file=<environment-variable-file-name>.env -p <internal_docker_port>:<machine_port> <docker_image_id> 
+  docker run -d --env-file=<environment-variable-file-name>.env -p <internal_docker_port>:<machine_port> <docker_image_id> 
 
-  docker run --env-file=.env -p 5000:5000 e31f4c2694445e8b3d38a09ca8847a7ecb2c956fc10fbaf3932ec9a71df9177d
+  docker run -d --env-file=.env -p 5000:5000 e31f4c2694445e8b3d38a09ca8847a7ecb2c956fc10fbaf3932ec9a71df9177d 
 ```
 6. If everything works upto that point then you can proceed to build using cloud build by using the following commands.
 ```bash
-  gcloud builds submit --tag <gcp-region-name>-docker.pkg.dev/<project-id>/artifact-repo-name>/<image-name>:<tag-name>
-  gcloud builds submit --tag europe-west1-docker.pkg.dev/gcp-practisepractise/interclub:1.0
+  gcloud builds submit .
+  gcloud builds submit .
 ```
 7. Try it locally using  docker
 ```bash
-  docker run --env-file=.env -p 5000:5000 europe-west1-docker.pkg.dev/gcp-practise/practise/ci-cd-demo:1.0
+  docker run -d --env-file=.env -p 5000:5000 europe-west1-docker.pkg.dev/gcp-practise/practise/ci-cd-demo:1.0
 ```
 8. Create a cloudbuid.yaml file to specify how to build using docker
 ```yaml
@@ -70,3 +70,39 @@ steps:
     args: ['build', '-t', 'us-central1-docker.pkg.dev/${PROJECT_ID}/practise/ci-cd:1.0', '.']
 ```
 >> to run it locally just follow instructions on step 7
+
+
+## Using the deployed image locally connected to a mongodb container
+1. Create a docker-compose.yml as shown below
+```yml
+version: '3.1'
+
+services:
+  api:
+    image: europe-west1-docker.pkg.dev/gcp-practise-364610/prac/ci-cd:2.2
+    environment:
+      PORT: 5000
+      MONGODB_URI: mongodb://root:example@dev-db:27017/
+      RANK: 2
+      ESPADA: "Barragan Louisenbairn"
+    depends_on:
+      - dev-db
+    ports:
+      - 5000:5000
+
+  dev-db:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+```
+2. To run the docker compose file run
+```bash
+    docker-compose up -d 
+```
+3. To shut down the docker containers
+```bash
+    docker-compose down 
+```

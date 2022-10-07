@@ -116,3 +116,9 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+# terraform files
+terraform-service-account-credentials.json
+/.terraform.lock.hcl
+/terraform.tfstate
+/terraform.tfstate.backup
+

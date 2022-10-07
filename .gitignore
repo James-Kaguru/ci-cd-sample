@@ -36,3 +36,10 @@ lerna-debug.log*
 
 # Environment variable
 .env*
+
+# IDE - webstorm
+/.idea/*
+
+# terraform files
+/.terraform/*
+*terraform*
