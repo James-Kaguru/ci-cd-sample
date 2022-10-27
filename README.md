@@ -14,9 +14,9 @@ This is meant to kickstart anyone who wants to setup a ci/cd pipline. It is a si
   }
 }
 ```
->> In the example above the build script is "nest build" run with by the command "build".
+> In the example above the build script is "nest build" run with by the command "build".
 4. Ensure that the package.json also has a run script that is able to run your built code.
->> In the example above it is represented by the "node dist/main" which is run by the "start:prod" command.
+> In the example above it is represented by the "node dist/main" which is run by the "start:prod" command.
 You can manually test the steps above to see if they are working correctly then proceed with the rest. It is important
 to **test at every step** so that you are certain that the program runs before moving to later steps. 
 5. Create a Dockerfile that incorporates your build and run step as shown below. Also ensure that you have a .dockerignore file
@@ -39,9 +39,9 @@ EXPOSE $PORT
 RUN pnpm run build
 CMD pnpm run start:prod
 ```
->> Our build step is run then our run step is run as shown in the last two lines
+> Our build step is run then our run step is run as shown in the last two lines
 
->>You should test whether docker file is able to build correctly. Example is as shown below
+>You should test whether docker file is able to build correctly. Example is as shown below
 
 This builds a docker image using the Dockerfile in the current folder.
 ```bash
@@ -69,7 +69,7 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'us-central1-docker.pkg.dev/${PROJECT_ID}/practise/ci-cd:1.0', '.']
 ```
->> to run it locally just follow instructions on step 7
+> to run it locally just follow instructions on step 7
 
 
 ## Using the deployed image locally connected to a mongodb container
